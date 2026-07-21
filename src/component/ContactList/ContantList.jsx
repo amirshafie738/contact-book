@@ -1,3 +1,4 @@
+import ContactCard from "../ContactCard/ContactCard"
 
 function ContactList({Contacts}){
     if(Contacts.length===0){
@@ -11,7 +12,7 @@ function ContactList({Contacts}){
     return(
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5">
             {Contacts.map((contact)=>(
-                <ContactCard  key={contact.id} Contacts={contact}/>
+                <ContactCard  key={contact.id} contact={contact}/>
             ))}
         </div>
         
