@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import { API_URL } from "./BAS_URL/BAS_URL";
+import ContactList from "./component/ContactList/ContantList";
 
 function App() {
 
@@ -28,7 +29,7 @@ function App() {
 
   return (
     <div className="App">
-      
+      <ContactList Contacts={Contacts}/>
     </div>
   );
 }
