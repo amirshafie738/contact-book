@@ -28,7 +28,13 @@ function App() {
   // part of return 
 
   return (
-    <div className="App">
+    
+    <div className="App container mx-auto p-5">
+      
+      <h1 className="text-3xl font-bold text-center mb-5">
+        Contact Book
+      </h1>
+
       <ContactList Contacts={Contacts}/>
     </div>
   );
