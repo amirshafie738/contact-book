@@ -1,11 +1,15 @@
 import { useEffect, useState } from "react";
 import { API_URL } from "./BAS_URL/BAS_URL";
 import ContactList from "./component/ContactList/ContantList";
+import ContactForm from "./component/ContactForm/ContactForm";
+import Modal from "./component/modal/Modal";
 
 function App() {
 
   // part of hok
   const [Contacts, setContacts] = useState([])
+  // modal state
+  const [isModalOpen, setIsModalOpen] = useState(false);
 
   // useEffect
 
@@ -28,14 +32,16 @@ function App() {
   // part of return 
 
   return (
-    
-    <div className="App container mx-auto p-5">
-      
-      <h1 className="text-3xl font-bold text-center mb-5">
-        Contact Book
-      </h1>
 
-      <ContactList Contacts={Contacts}/>
+    <div className="App container mx-auto p-5">
+
+      <ContactForm
+        fetchContacts={fetchContacts}
+        isModalOpen={isModalOpen}
+        setIsModalOpen={setIsModalOpen}
+      />
+      <Modal  setIsModalOpen={setIsModalOpen} />
+      <ContactList Contacts={Contacts} />
     </div>
   );
 }
