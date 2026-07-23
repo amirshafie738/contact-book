@@ -5,14 +5,13 @@ import ContactForm from "./component/ContactForm/ContactForm";
 import Modal from "./component/modal/Modal";
 
 function App() {
-
+  /// usstate 
   // part of hok
   const [Contacts, setContacts] = useState([])
   // modal state
   const [isModalOpen, setIsModalOpen] = useState(false);
 
   // useEffect
-
   useEffect(() => {
     fetchContacts()
   }, [])
@@ -34,11 +33,11 @@ function App() {
     if (!confirmDelete) return;
 
     try {
-      await fetch(`${API_URL}/${id}`,{
+      await fetch(`${API_URL}/${id}`, {
         method: "DELETE",
       })
       fetchContacts()
-     
+
     } catch (err) {
       console.log(err)
     }
