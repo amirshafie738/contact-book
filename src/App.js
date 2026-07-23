@@ -28,6 +28,21 @@ function App() {
       console.log(err)
     }
   }
+  // delete api
+  async function deleteHandler(id) {
+    const confirmDelete = window.confirm("are you sure?")
+    if (!confirmDelete) return;
+
+    try {
+      await fetch(`${API_URL}/${id}`,{
+        method: "DELETE",
+      })
+      fetchContacts()
+     
+    } catch (err) {
+      console.log(err)
+    }
+  }
 
   // part of return 
 
@@ -40,8 +55,8 @@ function App() {
         isModalOpen={isModalOpen}
         setIsModalOpen={setIsModalOpen}
       />
-      <Modal  setIsModalOpen={setIsModalOpen} />
-      <ContactList Contacts={Contacts} />
+      <Modal setIsModalOpen={setIsModalOpen} />
+      <ContactList Contacts={Contacts} deleteHandler={deleteHandler} />
     </div>
   );
 }
