@@ -1,6 +1,6 @@
 import ContactCard from "../ContactCard/ContactCard"
 
-function ContactList({Contacts}){
+function ContactList({Contacts , deleteHandler}){
     if(Contacts.length===0){
         return(
             <h2 className="text-center text-xl font-semibold mt-5">
@@ -12,7 +12,7 @@ function ContactList({Contacts}){
     return(
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5">
             {Contacts.map((contact)=>(
-                <ContactCard  key={contact.id} contact={contact}/>
+                <ContactCard  key={contact.id} contact={contact} deleteHandler={deleteHandler} />
             ))}
         </div>
         
