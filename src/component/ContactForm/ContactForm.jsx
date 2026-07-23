@@ -2,15 +2,30 @@ import { useEffect, useState } from "react";
 import { API_URL } from "../../BAS_URL/BAS_URL";
 
 function ContactForm({ fetchContacts, isModalOpen, setIsModalOpen }) {
+  //loading sunbmit
+  const [submitLoading, setSubmitLoading] = useState(false);
+  // form value state
   const [formValue, setFormValue] = useState({
     name: "",
     phone: "",
     job: "",
     favorite: false,
   });
+
+  // submit function
   async function submitHandler(e) {
     e.preventDefault();
+    setSubmitLoading(true);
 
+    if (
+      !formValue.name ||
+      !formValue.phone ||
+      !formValue.job
+    ) {
+      alert("Please fill in all fields.",setSubmitLoading(false));
+      return;
+    }
+    
     try {
       await fetch(API_URL, {
         method: "POST",
@@ -21,19 +36,21 @@ function ContactForm({ fetchContacts, isModalOpen, setIsModalOpen }) {
       });
 
       fetchContacts();
-      setFormValue(
-        {
-          name: "",
-          phone: "",
-          job: "",
-          favorite: false,
-        },
-        setIsModalOpen(false)
-      );
+      setFormValue({
+        name: "",
+        phone: "",
+        job: "",
+        favorite: false,
+      });
+
+      setIsModalOpen(false);
     } catch (error) {
       console.log(error);
+    } finally {
+      setSubmitLoading(false);
     }
   }
+
   return (
     <div className={`modal ${isModalOpen ? "modal-open" : ""}`}>
       <div className="modal-box">
@@ -79,8 +96,17 @@ function ContactForm({ fetchContacts, isModalOpen, setIsModalOpen }) {
               setFormValue((prv) => ({ ...prv, job: e.target.value }))
             }
           />
-
-          <button className="btn btn-primary w-full">Add Contact</button>
+          {/* submit button */}
+          <button className="btn btn-primary w-full" disabled={submitLoading}>
+            {submitLoading ? (
+              <>
+                <span className="loading loading-spinner loading-sm"></span>
+                Saving...
+              </>
+            ) : (
+              "Add Contact"
+            )}
+          </button>
         </form>
       </div>
     </div>
