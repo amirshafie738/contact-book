@@ -1,5 +1,5 @@
 
-function SearchList({search, setSort, sort, setSearch}){
+function SearchList({search, setSort, sort, setSearch, totalContact}){
     return(
         <div className="flex gap-4 mb-5">
         <input
@@ -19,6 +19,8 @@ function SearchList({search, setSort, sort, setSearch}){
           <option value="asc">A-Z</option>
           <option value="desc">Z-A</option>
         </select>
+
+        <span className="text-3xl font-bold text-primary">{totalContact}</span>
       </div>
 
     )
