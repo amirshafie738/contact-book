@@ -3,16 +3,21 @@ import { API_URL } from "./BAS_URL/BAS_URL";
 import ContactList from "./component/ContactList/ContantList";
 import ContactForm from "./component/ContactForm/ContactForm";
 import Modal from "./component/modal/Modal";
+import SearchList from "./component/search/search";
 
 function App() {
   /// usstate 
   // part of hok
-  const [Contacts, setContacts] = useState([])
+  const [contacts, setContacts] = useState([]);
   // modal state
   const [isModalOpen, setIsModalOpen] = useState(false);
   //edit 
   const [isEdit, setIsEdit] = useState(false);
   const [currentContact, setCurrentContact] = useState(null);
+  //search 
+  const [search, setSearch] = useState("");
+  // sort
+  const [sort, setSort] = useState("");
 
   // useEffect
   useEffect(() => {
@@ -71,13 +76,28 @@ function App() {
       console.log(error);
     }
   }
+  // functioon filter
+  const filteredContacts =[...contacts]
+    .filter((contact) =>
+      contact.name.toLowerCase().includes(search.toLowerCase())
+    )
+    .sort((a, b) => {
+      if (sort === "asc") {
+        return a.name.localeCompare(b.name);
+      }
 
+      if (sort === "desc") {
+        return b.name.localeCompare(a.name);
+      }
+
+      return 0;
+    });
   // part of return 
 
   return (
 
     <div className="App container mx-auto p-5">
-
+      <SearchList setSort={setSort} sort={sort} setSearch={setSearch} search={search} />
       <ContactForm
         fetchContacts={fetchContacts}
         isModalOpen={isModalOpen}
@@ -88,7 +108,7 @@ function App() {
         setCurrentContact={setCurrentContact}
       />
       <Modal setIsModalOpen={setIsModalOpen} />
-      <ContactList Contacts={Contacts} deleteHandler={deleteHandler} editHandler={editHandler} favoriteHandler={favoriteHandler} />
+      <ContactList contacts={filteredContacts} deleteHandler={deleteHandler} editHandler={editHandler} favoriteHandler={favoriteHandler} />
     </div>
   );
 }
