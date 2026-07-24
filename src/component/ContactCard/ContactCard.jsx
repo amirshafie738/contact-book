@@ -1,9 +1,9 @@
-function ContactCard({ contact, deleteHandler, editHandler }) {
+function ContactCard({ contact, deleteHandler, editHandler,favoriteHandler }) {
   return (
     <div className="card bg-base-100 shadow-md border">
       <div className="card-body">
         <p className="flex justify-end items-center gap-2">
-          <button className="text-2xl">
+          <button  onClick={() => favoriteHandler(contact)} className="text-2xl">
             <span
               className={contact.favorite ? "text-red-500" : "text-gray-400"}
             >

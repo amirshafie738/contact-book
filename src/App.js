@@ -52,6 +52,26 @@ function App() {
     setIsEdit(true);
     setIsModalOpen(true);
   }
+  // favorite
+  async function favoriteHandler(contact) {
+    try {
+      await fetch(`${API_URL}/${contact.id}`, {
+        method: "PUT",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          ...contact,
+          favorite: !contact.favorite,
+        }),
+      });
+
+      fetchContacts();
+    } catch (error) {
+      console.log(error);
+    }
+  }
+
   // part of return 
 
   return (
@@ -68,7 +88,7 @@ function App() {
         setCurrentContact={setCurrentContact}
       />
       <Modal setIsModalOpen={setIsModalOpen} />
-      <ContactList Contacts={Contacts} deleteHandler={deleteHandler}  editHandler={editHandler} />
+      <ContactList Contacts={Contacts} deleteHandler={deleteHandler} editHandler={editHandler} favoriteHandler={favoriteHandler} />
     </div>
   );
 }
