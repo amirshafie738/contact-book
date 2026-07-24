@@ -1,7 +1,15 @@
 import { useEffect, useState } from "react";
 import { API_URL } from "../../BAS_URL/BAS_URL";
 
-function ContactForm({ fetchContacts, isModalOpen, setIsModalOpen }) {
+function ContactForm({
+  fetchContacts,
+  isModalOpen,
+  setIsModalOpen,
+  isEdit,
+  setIsEdit,
+  currentContact,
+  setCurrentContact,
+}) {
   //loading sunbmit
   const [submitLoading, setSubmitLoading] = useState(false);
   // form value state
@@ -17,32 +25,41 @@ function ContactForm({ fetchContacts, isModalOpen, setIsModalOpen }) {
     e.preventDefault();
     setSubmitLoading(true);
 
-    if (
-      !formValue.name ||
-      !formValue.phone ||
-      !formValue.job
-    ) {
-      alert("Please fill in all fields.",setSubmitLoading(false));
+    if (!formValue.name || !formValue.phone || !formValue.job) {
+      alert("Please fill in all fields.", setSubmitLoading(false));
       return;
     }
-    
+
     try {
-      await fetch(API_URL, {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(formValue),
-      });
+      if (isEdit) {
+        await fetch(`${API_URL}/${currentContact.id}`, {
+          method: "PUT",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify(formValue),
+        });
+        fetchContacts();
+      } else {
+        await fetch(API_URL, {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify(formValue),
+        });
 
-      fetchContacts();
-      setFormValue({
-        name: "",
-        phone: "",
-        job: "",
-        favorite: false,
-      });
+        fetchContacts();
 
+        setFormValue({
+          name: "",
+          phone: "",
+          job: "",
+          favorite: false,
+        });
+
+        closeAll();
+      }
       setIsModalOpen(false);
     } catch (error) {
       console.log(error);
@@ -50,19 +67,43 @@ function ContactForm({ fetchContacts, isModalOpen, setIsModalOpen }) {
       setSubmitLoading(false);
     }
   }
+  function closeAll() {
+    setFormValue({
+      name: "",
+      phone: "",
+      job: "",
+      favorite: false,
+    });
+    setIsModalOpen(false);
+    setCurrentContact(null);
+    setIsEdit(false);
+  }
 
+  // useEffect for editing
+  useEffect(() => {
+    if (currentContact) {
+      setFormValue({
+        name: currentContact.name,
+        phone: currentContact.phone,
+        job: currentContact.job,
+        favorite: currentContact.favorite,
+      });
+    }
+  }, [currentContact]);
   return (
     <div className={`modal ${isModalOpen ? "modal-open" : ""}`}>
       <div className="modal-box">
         <button
           type="button"
           className="absolute text-gray-500 top-1 right-1 text-xl font-semibold cursor-pointer"
-          onClick={() => setIsModalOpen(false)}
+          onClick={() => closeAll()}
         >
           ✕
         </button>
         <form onSubmit={submitHandler} className="border rounded-lg p-4 mb-5">
-          <h2 className="text-xl font-semibold mb-4">Add Contact</h2>
+          <h2 className="text-xl font-semibold mb-4">
+            {isEdit ? "Edit contact" : "Add Contact"}
+          </h2>
 
           <input
             className="input input-bordered w-full mb-3"
@@ -104,7 +145,7 @@ function ContactForm({ fetchContacts, isModalOpen, setIsModalOpen }) {
                 Saving...
               </>
             ) : (
-              "Add Contact"
+              <span>{isEdit ? "Update Contact" : "Add Contact"}</span>
             )}
           </button>
         </form>

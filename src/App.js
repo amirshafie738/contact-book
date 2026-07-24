@@ -10,6 +10,9 @@ function App() {
   const [Contacts, setContacts] = useState([])
   // modal state
   const [isModalOpen, setIsModalOpen] = useState(false);
+  //edit 
+  const [isEdit, setIsEdit] = useState(false);
+  const [currentContact, setCurrentContact] = useState(null);
 
   // useEffect
   useEffect(() => {
@@ -43,6 +46,12 @@ function App() {
     }
   }
 
+  //edit 
+  function editHandler(contact) {
+    setCurrentContact(contact);
+    setIsEdit(true);
+    setIsModalOpen(true);
+  }
   // part of return 
 
   return (
@@ -53,9 +62,13 @@ function App() {
         fetchContacts={fetchContacts}
         isModalOpen={isModalOpen}
         setIsModalOpen={setIsModalOpen}
+        isEdit={isEdit}
+        setIsEdit={setIsEdit}
+        currentContact={currentContact}
+        setCurrentContact={setCurrentContact}
       />
       <Modal setIsModalOpen={setIsModalOpen} />
-      <ContactList Contacts={Contacts} deleteHandler={deleteHandler} />
+      <ContactList Contacts={Contacts} deleteHandler={deleteHandler}  editHandler={editHandler} />
     </div>
   );
 }
