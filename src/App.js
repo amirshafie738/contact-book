@@ -92,12 +92,16 @@ function App() {
 
       return 0;
     });
+
+  //totalContact
+  const totalContact = contacts.length;
+
   // part of return 
 
   return (
 
     <div className="App container mx-auto p-5">
-      <SearchList setSort={setSort} sort={sort} setSearch={setSearch} search={search} />
+      <SearchList setSort={setSort} sort={sort} setSearch={setSearch} search={search} totalContact={totalContact} />
       <ContactForm
         fetchContacts={fetchContacts}
         isModalOpen={isModalOpen}
