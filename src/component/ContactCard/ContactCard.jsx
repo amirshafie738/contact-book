@@ -1,4 +1,4 @@
-function ContactCard({ contact, deleteHandler }) {
+function ContactCard({ contact, deleteHandler, editHandler }) {
   return (
     <div className="card bg-base-100 shadow-md border">
       <div className="card-body">
@@ -22,7 +22,7 @@ function ContactCard({ contact, deleteHandler }) {
         </p>
 
         <div className="flex justify-end gap-2 mt-4">
-          <button className="btn btn-warning btn-sm">Edit</button>
+          <button onClick={() => editHandler(contact)} className="btn btn-warning btn-sm">Edit</button>
 
           <button
             onClick={() => deleteHandler(contact.id)}
