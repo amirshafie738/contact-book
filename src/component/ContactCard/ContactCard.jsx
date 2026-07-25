@@ -1,9 +1,15 @@
-function ContactCard({ contact, deleteHandler, editHandler,favoriteHandler }) {
+function ContactCard({
+  contact,
+  deleteHandler,
+  editHandler,
+  favoriteHandler,
+  detailHandler,
+}) {
   return (
     <div className="card bg-base-100 shadow-md border">
       <div className="card-body">
         <p className="flex justify-end items-center gap-2">
-          <button  onClick={() => favoriteHandler(contact)} className="text-2xl">
+          <button onClick={() => favoriteHandler(contact)} className="text-2xl">
             <span
               className={contact.favorite ? "text-red-500" : "text-gray-400"}
             >
@@ -22,7 +28,12 @@ function ContactCard({ contact, deleteHandler, editHandler,favoriteHandler }) {
         </p>
 
         <div className="flex justify-end gap-2 mt-4">
-          <button onClick={() => editHandler(contact)} className="btn btn-warning btn-sm">Edit</button>
+          <button
+            onClick={() => editHandler(contact)}
+            className="btn btn-warning btn-sm"
+          >
+            Edit
+          </button>
 
           <button
             onClick={() => deleteHandler(contact.id)}
@@ -30,6 +41,10 @@ function ContactCard({ contact, deleteHandler, editHandler,favoriteHandler }) {
           >
             Delete
           </button>
+          <button
+            className="btn btn-info btn-sm"
+            onClick={() => detailHandler(contact)}
+          >Detail</button>
         </div>
       </div>
     </div>

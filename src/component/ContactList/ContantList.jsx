@@ -5,6 +5,7 @@ function ContactList({
   deleteHandler,
   editHandler,
   favoriteHandler,
+  detailHandler
 }) {
   if (contacts.length === 0) {
     return (
@@ -23,6 +24,7 @@ function ContactList({
           deleteHandler={deleteHandler}
           editHandler={editHandler}
           favoriteHandler={favoriteHandler}
+          detailHandler={detailHandler}
         />
       ))}
     </div>
